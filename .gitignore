@@ -1,0 +1,3 @@
+# model parameter
+run/
+./deeplab-resnet.pth
