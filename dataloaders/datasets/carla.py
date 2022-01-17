@@ -8,7 +8,7 @@ from torchvision import transforms
 from dataloaders import custom_transforms as tr
 
 class CarlaDataset(data.Dataset):
-    NUM_CLASSES = 23
+    NUM_CLASSES = 6
 
     def __init__(self, args, root=Path.db_root_dir('carla'), split="train"):
         self.root = root
@@ -40,34 +40,41 @@ class CarlaDataset(data.Dataset):
         # 데이터셋 경로 상의 모든 파일을 train / test / val 각각으로 불러옴
         self.files[split] = self.recursive_glob(rootdir=self.images_base, suffix='.png')
 
-        self.classes = {  0	:	[	0	, 0	    , 0 	],	 # unlabeled     =   0
-                        210	:	[	70	, 70	, 70	],	 # building      =   1
-                         70	:	[	0	, 0 	, 70	],	 # PTW           =   2
-                        225	:	[	55	, 90	, 80	],	 # other         =   3
-                        300	:	[	220	, 20	, 60	],	 # pedestrian    =   4
-                        459	:	[	153	, 153	, 153	],	 # pole          =   5
-                        441	:	[	157	, 234	, 50	],	 # road line     =   6
-                        320	:	[	128	, 64	, 128	],	 # road          =   7
-                        511	:	[	244	, 35	, 232	],	 # sidewalk      =   8
-                        230	:	[	0	, 0	    , 230	],	 # CommVeh       =   9
-                        142	:	[	0	, 0	    , 142	],	 # vehicle       =  10
-                        360	:	[	102	, 102	, 156	],	 # wall          =  11
-                        440	:	[	220	, 220	, 0  	],	 # traffic sign  =  12
-                        380	:	[	70	, 130	, 180	],	 # sky           =  13
-                        162	:	[	81	, 0	    , 81    ],	 # ground        =  14
-                        350	:	[	150	, 100	, 100	],	 # bridge        =  15
-                        520	:	[	230	, 150	, 140	],	 # rail track    =  16
-                        525	:	[	180	, 165	, 180	],	 # guard rail    =  17
-                        450	:	[	250	, 170	, 30	],	 # traffic light =  18
-                        460	:	[	110	, 190	, 160	],	 # static        =  19
-                        340	:	[	170	, 120	, 50	],	 # dynamic       =  20
-                        255	:	[	45	, 60	, 150	],	 # Bicycle       =  21
-                        415	:	[	145	, 170	, 100	]}	 # terrain       =  22
+        self.classes = { 
+                         0	:	[	0	, 0	    , 0 	],	 # unlabeled     =   0
+                        # 210	:	[	70	, 70	, 70	],	 # building      =   1
+                         70	:	[	0	, 0 	, 70	],	 # PTW           =   2*
+                        # 225	:	[	55	, 90	, 80	],	 # other         =   3
+                        300	:	[	220	, 20	, 60	],	 # pedestrian    =   4*
+                        # 459	:	[	153	, 153	, 153	],	 # pole          =   5
+                        # 441	:	[	157	, 234	, 50	],	 # road line     =   6
+                        # 320	:	[	128	, 64	, 128	],	 # road          =   7
+                        # 511	:	[	244	, 35	, 232	],	 # sidewalk      =   8
+                        230	:	[	0	, 0	    , 230	],	 # CommVeh       =   9*
+                        142	:	[	0	, 0	    , 142	],	 # vehicle       =  10*
+                        # 360	:	[	102	, 102	, 156	],	 # wall          =  11
+                        # 440	:	[	220	, 220	, 0  	],	 # traffic sign  =  12
+                        # 380	:	[	70	, 130	, 180	],	 # sky           =  13
+                        # 162	:	[	81	, 0	    , 81    ],	 # ground        =  14
+                        # 350	:	[	150	, 100	, 100	],	 # bridge        =  15
+                        # 520	:	[	230	, 150	, 140	],	 # rail track    =  16
+                        # 525	:	[	180	, 165	, 180	],	 # guard rail    =  17
+                        # 450	:	[	250	, 170	, 30	],	 # traffic light =  18
+                        # 460	:	[	110	, 190	, 160	],	 # static        =  19
+                        # 340	:	[	170	, 120	, 50	],	 # dynamic       =  20
+                        255	:	[	45	, 60	, 150	]}	 # Bicycle       =  21*
+                        # 415	:	[	145	, 170	, 100	]}	 # terrain       =  22
+        # Dynamic class
+        # self.void_classes = [210, 225, 459, 441, 320, 511, 360, 440, 380, 162, 350, 520, 525, 450, 460, 340, 415]
+        self.void_classes = [210, 225, 459, 441, 320, 511, 360, 440, 380, 162, 350, 520, 525, 450, 460, 340, 415]
+        self.valid_classes = [0, 70, 300, 230, 142, 255]
 
-        self.void_classes = [] # 10
-        self.valid_classes = [0, 210, 70, 225, 300, 459, 441, 320, 511, 230, 142, 360, 440, 380, 162, 350, 520, 525, 450, 460, 340, 255, 415]
-        self.class_names = ['unlabeled', 'building', 'PTW', 'other', 'pedestrian', 'pole', 'roadline', 'road', 'sidewalk', 'CommVeh', 'vehicle', \
-                            'wall', 'trafficsign', 'sky', 'ground', 'bridge', 'railtrack', 'guardrail', 'trafficlight', 'static', 'dynamic', 'Bicycle', 'terrain']            
+        # Entire class
+        # self.void_classes = []
+        # self.valid_classes = [0, 210, 70, 225, 300, 459, 441, 320, 511, 230, 142, 360, 440, 380, 162, 350, 520, 525, 450, 460, 340, 255, 415]
+        # self.class_names = ['unlabeled', 'building', 'PTW', 'other', 'pedestrian', 'pole', 'roadline', 'road', 'sidewalk', 'CommVeh', 'vehicle', \
+        #                     'wall', 'trafficsign', 'sky', 'ground', 'bridge', 'railtrack', 'guardrail', 'trafficlight', 'static', 'dynamic', 'Bicycle', 'terrain']            
+        self.class_names = ['unlabeled', 'PTW', "pedestrian", "CommVeh", "vehicle", "Bicycle"]
 
                 
         self.ignore_index = 0
@@ -93,8 +100,9 @@ class CarlaDataset(data.Dataset):
         _tmp = np.sum(_tmp, axis=2)
 
         _tmp = self.encode_segmap(_tmp)
+
         _target = Image.fromarray((_tmp).astype(np.uint8))
-        
+        # _target.show()
         sample = {'image': _img, 'label': _target}
 
         if self.split == 'train':

@@ -31,7 +31,8 @@ def decode_segmap(label_mask, dataset, plot=False):
         n_classes = 13
         label_colours = get_morai_labels()
     elif dataset == 'carla':
-        n_classes = 23
+        # n_classes = 23
+        n_classes = 6
         label_colours = get_carla_labels()
     else:
         raise NotImplementedError
@@ -120,28 +121,28 @@ def get_morai_labels():
 def get_carla_labels():
     return np.array([
     [	0	, 0	    , 0 	],	 # unlabeled     =   0
-    [	70	, 70	, 70	],	 # building      =   1
+    # [	70	, 70	, 70	],	 # building      =   1
     [	0	,  0 	, 70	],	 # PTW           =   2
-    [	55	, 90	, 80	],	 # other         =   3
+    # [	55	, 90	, 80	],	 # other         =   3
     [	220	, 20	, 60	],	 # pedestrian    =   4
-    [	153	, 153	, 153	],	 # pole          =   5
-    [	157	, 234	, 50	],	 # road line     =   6
-    [	128	, 64	, 128	],	 # road          =   7
-    [	244	, 35	, 232	],	 # sidewalk      =   8
+    # [	153	, 153	, 153	],	 # pole          =   5
+    # [	157	, 234	, 50	],	 # road line     =   6
+    # [	128	, 64	, 128	],	 # road          =   7
+    # [	244	, 35	, 232	],	 # sidewalk      =   8
     [	0	, 0  	, 230	],	 # CommVeh       =   9
     [	0	, 0	    , 142	],	 # vehicle       =  10
-    [	102	, 102	, 156	],	 # wall          =  11
-    [	220	, 220	, 0  	],	 # traffic sign  =  12
-    [	70	, 130	, 180	],	 # sky           =  13
-    [	81	, 0	    , 81    ],	 # ground        =  14
-    [	150	, 100	, 100	],	 # bridge        =  15
-    [	230	, 150	, 140	],	 # rail track    =  16
-    [	180	, 165	, 180	],	 # guard rail    =  17
-    [	250	, 170	, 30	],	 # traffic light =  18
-    [	110	, 190	, 160	],	 # static        =  19
-    [	170	, 120	, 50	],	 # dynamic       =  20
-    [	45	, 60	, 150	],	 # Bicycle       =  21
-    [	145	, 170	, 100	]])	 # terrain       =  22
+    # [	102	, 102	, 156	],	 # wall          =  11
+    # [	220	, 220	, 0  	],	 # traffic sign  =  12
+    # [	70	, 130	, 180	],	 # sky           =  13
+    # [	81	, 0	    , 81    ],	 # ground        =  14
+    # [	150	, 100	, 100	],	 # bridge        =  15
+    # [	230	, 150	, 140	],	 # rail track    =  16
+    # [	180	, 165	, 180	],	 # guard rail    =  17
+    # [	250	, 170	, 30	],	 # traffic light =  18
+    # [	110	, 190	, 160	],	 # static        =  19
+    # [	170	, 120	, 50	],	 # dynamic       =  20
+    [	45	, 60	, 150	]])  # Bicycle       =  21
+    # [	145	, 170	, 100	]])	 # terrain       =  22
 
 
 def get_pascal_labels():
