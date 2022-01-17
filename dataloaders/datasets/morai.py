@@ -166,7 +166,6 @@ class MoraiDataset(data.Dataset):
         # print(_img.shape)
         _tmp = np.array(Image.open(lbl_path), dtype=np.uint8)
         # print(lbl_path)
-        # print(_tmp.shape)
         
         # _tmp = _tmp[:, :, 0:3]
         _tmp = np.sum(_tmp, axis=2)
