@@ -15,7 +15,9 @@ class Path(object):
         elif dataset == 'morai':
             return '/home/ailab/jinsu/imageSegmentation/image_full'
         elif dataset == 'carla':
-            return '/home/ailab/Desktop/CARLA_DATASET_V1.0/'
+            # return '/home/ailab/Desktop/CARLA_DATASET_V1.0/'
+            return '/home/jieun/Desktop/CARLA'
+        
         else:
             print('Dataset {} not available.'.format(dataset))
             raise NotImplementedError
