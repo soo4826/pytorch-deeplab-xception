@@ -1,4 +1,5 @@
 import argparse
+from base64 import decode
 import os
 import numpy as np
 import dataloaders 
@@ -16,7 +17,7 @@ from utils.metrics import Evaluator
 from torchvision import transforms
 import torchvision.transforms as tr
 from torch.utils.data import DataLoader
-
+from dataloaders.utils import decode_segmap
 class Tester(object):
     def __init__(self, args):
         if not os.path.isfile(args.parameter):
@@ -24,7 +25,7 @@ class Tester(object):
         self.args = args
         self.color_map = utils.get_carla_labels()
         self.nclass = int(args.num_class)
-        
+        self.save_result = args.save_result
         self.save_path = args.save_path
         
         # Init dataloader
@@ -48,10 +49,11 @@ class Tester(object):
         
         
 
-    def save_image(self, path, img):
-        decode_pred = utils.decode_segmap(img, dataset='carla', plot=False)
+    def save_image(self, path, img, save_num):
+        decode_pred = decode_segmap(img, dataset='carla', plot=False)
+        # print(np.max(decode_pred.reshape(-1, 1)))
         save_img = Image.fromarray(decode_pred.astype('uint8'))
-        save_img.save(path)
+        save_img.save(os.path.join(path, str(save_num).zfill(4) + str('.png')))
 
     def transform(self):
         return tr.Compose([
@@ -61,6 +63,7 @@ class Tester(object):
     def inference(self):
         self.model.eval()
         self.evaluator.reset()
+        save_num =0
         for i, sample in enumerate(tqdm(self.test_loader)):        
             test_img, test_gt = sample['image'].cuda(), sample['label'].cuda()
             
@@ -70,12 +73,17 @@ class Tester(object):
             pred = output.data.cpu().numpy()
             pred_ = pred.argmax(axis=1)
             gt = test_gt.cpu().numpy()
-            
-            # save prediction result
-            # pred_save = output.squeeze().cpu()
             # print(gt.shape, pred_.shape)
-            # self.save_image(pred_save, self.save_path)
+            
+            # For evaluation 
             self.evaluator.add_batch(gt, pred_)
+            
+            # For save prediction result
+            if self.save_result:
+                pred_save = np.argmax(output.squeeze().cpu().numpy(), axis=0)
+                self.save_image(self.save_path, pred_save, save_num)
+            
+            save_num= save_num+1
         self.evaluator.Mean_Intersection_over_Union()
 
 
@@ -98,6 +106,9 @@ def main():
                         help='network output stride (default: 8)')
     parser.add_argument('--save-path', type=str, default='./inference',
                 help='save inference result into (default: ./inference)')
+    parser.add_argument('--save-result', type=bool, default=False,
+                        help='whether to save inference result')
+    
     args = parser.parse_args()
     
     tester = Tester(args)
