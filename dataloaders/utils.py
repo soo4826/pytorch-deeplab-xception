@@ -32,7 +32,7 @@ def decode_segmap(label_mask, dataset, plot=False):
         label_colours = get_morai_labels()
     elif dataset == 'carla':
         # n_classes = 23
-        n_classes = 6
+        n_classes = 5
         label_colours = get_carla_labels()
     else:
         raise NotImplementedError
@@ -123,7 +123,7 @@ def get_morai_labels():
 
 def get_carla_labels():
     return np.array([
-    [	0	, 0	    , 0 	],	 # unlabeled     =   0
+    # [	0	, 0	    , 0 	]	 # unlabeled     =   0
     # [	70	, 70	, 70	],	 # building      =   1
     [	0	,  0 	, 70	],	 # PTW           =   2
     # [	55	, 90	, 80	],	 # other         =   3
@@ -144,8 +144,9 @@ def get_carla_labels():
     # [	250	, 170	, 30	],	 # traffic light =  18
     # [	110	, 190	, 160	],	 # static        =  19
     # [	170	, 120	, 50	],	 # dynamic       =  20
-    [	45	, 60	, 150	]])  # Bicycle       =  21
-    # [	145	, 170	, 100	]])	 # terrain       =  22
+    [	0	, 0	    , 142	],	 # vehicle       =  10
+    [	119	, 11	, 32	]])  # Bicycle       =  21
+    # [	145	, 170	, 100	],	 # terrain       =  22
 
 
 def get_pascal_labels():
