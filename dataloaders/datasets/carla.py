@@ -66,16 +66,16 @@ class CarlaDataset(data.Dataset):
         #                   405 :	[	119	, 11	, 32	]}	 # Bicycle       =  21*
         #                 # 515	:	[	145	, 170	, 100	]}	 # terrain       =  22
         # Dynamic class
-        self.void_classes = [0, 280, 305, 612, 491, 448, 743, 516, 440, 560, 243, 450, 660, 705, 480, 620, 390, 515 ]
-        self.valid_classes = [140, 360, 460, 284, 194]
-        self.class_names = ['PTW', "pedestrian", "CommVeh", "vehicle", "Bicycle"]
-
-        ## Entire class
         # self.void_classes = [0, 280, 305, 612, 491, 448, 743, 516, 440, 560, 243, 450, 660, 705, 480, 620, 390, 515 ]
         # self.valid_classes = [140, 360, 460, 284, 194]
-        # self.class_names = ['unlabeled', 'building', 'PTW', 'other', 'pedestrian', 'pole', 'road line', 'road', 'sidewalk', \
-        #                     'CommVeh', 'vehicle', 'wall', 'traffic sign', 'sky', 'ground, bridge', 'rail track', 'guard rail',\
-        #                     'traffic light', 'static', 'dynamic', 'Bicycle', 'terrain']
+        # self.class_names = ['PTW', "pedestrian", "CommVeh", "vehicle", "Bicycle"]
+
+        ## Entire class
+        self.void_classes = []
+        self.valid_classes = [0, 280, 140, 305, 360, 612, 491, 448, 743, 460, 284, 516, 440, 560, 243, 450, 660, 705, 480, 620, 390, 405, 515]
+        self.class_names = ['unlabeled', 'building', 'PTW', 'other', 'pedestrian', 'pole', 'road line', 'road', 'sidewalk', \
+                            'CommVeh', 'vehicle', 'wall', 'traffic sign', 'sky', 'ground, bridge', 'rail track', 'guard rail',\
+                            'traffic light', 'static', 'dynamic', 'Bicycle', 'terrain']
 
                 
         self.ignore_index = 255
