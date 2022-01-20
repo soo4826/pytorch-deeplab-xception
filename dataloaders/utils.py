@@ -31,8 +31,8 @@ def decode_segmap(label_mask, dataset, plot=False):
         n_classes = 13
         label_colours = get_morai_labels()
     elif dataset == 'carla':
-        # n_classes = 23
-        n_classes = 5
+        n_classes = 23
+        # n_classes = 5
         label_colours = get_carla_labels()
     else:
         raise NotImplementedError

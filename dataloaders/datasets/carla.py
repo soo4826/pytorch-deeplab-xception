@@ -8,7 +8,7 @@ from torchvision import transforms
 from dataloaders import custom_transforms as tr
 
 class CarlaDataset(data.Dataset):
-    NUM_CLASSES = 5
+    NUM_CLASSES = 23
 
     def __init__(self, args, root=Path.db_root_dir('carla'), split="train"):
         self.root = root
@@ -109,7 +109,6 @@ class CarlaDataset(data.Dataset):
             return self.transform_val(sample)
         elif self.split == 'test':
             return self.transform_ts(sample)
-
 
 
     def encode_segmap(self, mask):
