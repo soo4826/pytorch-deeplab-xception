@@ -39,7 +39,7 @@ class CarlaDataset(data.Dataset):
 
         # 데이터셋 경로 상의 모든 파일을 train / test / val 각각으로 불러옴
         self.files[split] = self.recursive_glob(rootdir=self.images_base, suffix='.png')
-
+        self.files[split].sort()
         self.classes = { 
                          0	:	[	0	, 0	    , 0 	],	 # unlabeled     =   0
                         # 210	:	[	70	, 70	, 70	],	 # building      =   1
@@ -65,9 +65,9 @@ class CarlaDataset(data.Dataset):
                         255	:	[	45	, 60	, 150	]}	 # Bicycle       =  21*
                         # 415	:	[	145	, 170	, 100	]}	 # terrain       =  22
         # Dynamic class
-        # self.void_classes = [210, 225, 459, 441, 320, 511, 360, 440, 380, 162, 350, 520, 525, 450, 460, 340, 415]
-        self.void_classes = [210, 225, 459, 441, 320, 511, 360, 440, 380, 162, 350, 520, 525, 450, 460, 340, 415]
-        self.valid_classes = [0, 70, 300, 230, 142, 255]
+        self.void_classes = [ 280, 305, 612, 491, 448, 743, 516, 440, 560, 243, 450, 660, \
+                            705, 480, 620, 390, 515 ]
+        self.valid_classes = [0, 140, 360, 460, 284, 194]
 
         # Entire class
         # self.void_classes = []
@@ -96,8 +96,9 @@ class CarlaDataset(data.Dataset):
         _img = Image.open(img_path)
 
         _tmp = np.array(Image.open(lbl_path))
+        _blue = _tmp[:, :, -1]
 
-        _tmp = np.sum(_tmp, axis=2)
+        _tmp = np.sum(_tmp, axis=2)+_blue
 
         _tmp = self.encode_segmap(_tmp)
 

@@ -1,1 +1,1 @@
-CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet --lr 0.005 --workers 5 --epochs 150 --batch-size 4 --gpu-ids 0 --checkname deeplab-resnet --eval-interval 1 --dataset carla
+CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet --lr 0.001 --workers 5 --epochs 150 --batch-size 4 --gpu-ids 0 --checkname deeplab-resnet --eval-interval 1 --dataset carla --drop-last=True 

@@ -45,9 +45,9 @@ def decode_segmap(label_mask, dataset, plot=False):
         g[label_mask == ll] = label_colours[ll, 1]
         b[label_mask == ll] = label_colours[ll, 2]
     rgb = np.zeros((label_mask.shape[0], label_mask.shape[1], 3))
-    rgb[:, :, 0] = r / 255.0
-    rgb[:, :, 1] = g / 255.0
-    rgb[:, :, 2] = b / 255.0
+    rgb[:, :, 0] = r# / 255.0
+    rgb[:, :, 1] = g# / 255.0
+    rgb[:, :, 2] = b# / 255.0
     if plot:
         # plt.figure(figsize=(4,4))
         plt.imshow(rgb)
@@ -141,7 +141,7 @@ def get_carla_labels():
     # [	250	, 170	, 30	],	 # traffic light =  18
     # [	110	, 190	, 160	],	 # static        =  19
     # [	170	, 120	, 50	],	 # dynamic       =  20
-    [	45	, 60	, 150	]])  # Bicycle       =  21
+    [	119	, 11	, 32	]])  # Bicycle       =  21
     # [	145	, 170	, 100	]])	 # terrain       =  22
 
 

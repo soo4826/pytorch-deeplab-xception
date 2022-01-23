@@ -213,6 +213,8 @@ def main():
                                 testing (default: auto)')
     parser.add_argument('--use-balanced-weights', action='store_true', default=False,
                         help='whether to use balanced weights (default: False)')
+    parser.add_argument('--drop-last', type=bool, default=None,
+                        help='drop last data when loading data')
     # optimizer params
     parser.add_argument('--lr', type=float, default=None, metavar='LR',
                         help='learning rate (default: auto)')

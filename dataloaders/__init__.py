@@ -44,9 +44,10 @@ def make_data_loader(args, **kwargs):
         val_set = carla.CarlaDataset(args, split='val')
         test_set = carla.CarlaDataset(args, split='test')
         num_class = train_set.NUM_CLASSES
-        train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True, **kwargs)
-        val_loader = DataLoader(val_set, batch_size=args.batch_size, shuffle=False, **kwargs)
-        test_loader = DataLoader(test_set, batch_size=args.batch_size, shuffle=False, **kwargs)
+        train_loader = DataLoader(train_set, batch_size=args.batch_size, drop_last=args.drop_last, shuffle=True, **kwargs)
+        val_loader = DataLoader(val_set, batch_size=args.batch_size, drop_last=args.drop_last, shuffle=False, **kwargs)
+        test_loader = DataLoader(test_set, batch_size=args.batch_size, drop_last=args.drop_last, shuffle=False, **kwargs)
+        
 
         return train_loader, val_loader, test_loader, num_class
 
