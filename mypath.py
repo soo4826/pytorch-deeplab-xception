@@ -15,7 +15,7 @@ class Path(object):
         elif dataset == 'morai':
             return '/home/ailab/jinsu/imageSegmentation/image_full'
         elif dataset == 'carla':
-            return '/home/ailab/Desktop/CARLA_DATASET_V1.0'
+            return '/home/happy/Desktop/Dataset/CARLA'
 
             # return '/path/to/datasets/carla'
         

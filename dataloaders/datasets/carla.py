@@ -63,7 +63,7 @@ class CarlaDataset(data.Dataset):
         #                 # 480	:	[	250	, 170	, 30	],	 # traffic light =  18
         #                 # 620	:	[	110	, 190	, 160	],	 # static        =  19
         #                 # 390	:	[	170	, 120	, 50	],	 # dynamic       =  20
-        #                   405 :	[	119	, 11	, 32	]}	 # Bicycle       =  21*
+        #                   194 :	[	119	, 11	, 32	]}	 # Bicycle       =  21*
         #                 # 515	:	[	145	, 170	, 100	]}	 # terrain       =  22
         # Dynamic class
         # self.void_classes = [0, 280, 305, 612, 491, 448, 743, 516, 440, 560, 243, 450, 660, 705, 480, 620, 390, 515 ]
@@ -72,7 +72,8 @@ class CarlaDataset(data.Dataset):
 
         ## Entire class
         self.void_classes = []
-        self.valid_classes = [0, 280, 140, 305, 360, 612, 491, 448, 743, 460, 284, 516, 440, 560, 243, 450, 660, 705, 480, 620, 390, 194, 515]
+        self.valid_classes = [0, 280, 140, 305, 360, 612, 491, 448, 743, 460, 284, 516, 440, 560, 243, 450, 660, 705, \
+                                480, 620, 390, 194, 515]
         self.class_names = ['unlabeled', 'building', 'PTW', 'other', 'pedestrian', 'pole', 'road line', 'road', 'sidewalk', \
                             'CommVeh', 'vehicle', 'wall', 'traffic sign', 'sky', 'ground, bridge', 'rail track', 'guard rail',\
                             'traffic light', 'static', 'dynamic', 'Bicycle', 'terrain']
