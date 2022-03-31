@@ -1,4 +1,4 @@
-from dataloaders.datasets import cityscapes, coco, combine_dbs, pascal, sbd, morai, carla
+from dataloaders.datasets import cityscapes, coco, combine_dbs, pascal, sbd, morai, carla, kusv
 from torch.utils.data import DataLoader
 
 def make_data_loader(args, **kwargs):
@@ -43,6 +43,17 @@ def make_data_loader(args, **kwargs):
         train_set = carla.CarlaDataset(args, split='train')
         val_set = carla.CarlaDataset(args, split='val')
         test_set = carla.CarlaDataset(args, split='test')
+        num_class = train_set.NUM_CLASSES
+        train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True, **kwargs)
+        val_loader = DataLoader(val_set, batch_size=args.batch_size, shuffle=False, **kwargs)
+        test_loader = DataLoader(test_set, batch_size=args.batch_size, shuffle=False, **kwargs)
+        ignore_index = test_set.ignore_index
+        return train_loader, val_loader, test_loader, num_class, ignore_index
+
+    elif args.dataset == 'kusv':
+        train_set = kusv.KUSVDataset(args, split='train')
+        val_set = kusv.KUSVDataset(args, split='val')
+        test_set = kusv.KUSVDataset(args, split='test')
         num_class = train_set.NUM_CLASSES
         train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True, **kwargs)
         val_loader = DataLoader(val_set, batch_size=args.batch_size, shuffle=False, **kwargs)

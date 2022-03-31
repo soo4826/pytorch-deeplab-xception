@@ -16,7 +16,9 @@ class Path(object):
             return '/home/ailab/jinsu/imageSegmentation/image_full'
         elif dataset == 'carla':
             return '/home/ailab/Desktop/CARLA_DATASET_V1.0/'
-            # return '/path/to/datasets/carla'
+            # return '/home/user/jinsu/02_Semantic_Fusion/pytorch-deeplab-xception/dataset/kusv_dataset_1000'
+        elif dataset == 'kusv':
+            return '/home/user/jinsu/02_Semantic_Fusion/pytorch-deeplab-xception/data/kusv'
         
         else:
             print('Dataset {} not available.'.format(dataset))

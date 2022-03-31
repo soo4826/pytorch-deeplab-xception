@@ -30,8 +30,10 @@ def decode_segmap(label_mask, dataset, plot=False):
     elif dataset == 'morai':
         n_classes = 13
         label_colours = get_morai_labels()
+    elif dataset == 'kusv':
+        n_classes = 6
+        label_colours = get_kusv_labels()
     elif dataset == 'carla':
-        # n_classes = 23
         n_classes = 5
         label_colours = get_carla_labels()
     else:
@@ -45,6 +47,7 @@ def decode_segmap(label_mask, dataset, plot=False):
         g[label_mask == ll] = label_colours[ll, 1]
         b[label_mask == ll] = label_colours[ll, 2]
     rgb = np.zeros((label_mask.shape[0], label_mask.shape[1], 3))
+    # For CARLA, KUSV Dataset
     rgb[:, :, 0] = r
     rgb[:, :, 1] = g
     rgb[:, :, 2] = b
@@ -125,7 +128,7 @@ def get_carla_labels():
     return np.array([
     # [	0	, 0	    , 0 	]	 # unlabeled     =   0
     # [	70	, 70	, 70	],	 # building      =   1
-    [	0	,  0 	, 70	],	 # PTW           =   2
+    [	0	,  0 	, 70	],	 # PTqW           =   2
     # [	55	, 90	, 80	],	 # other         =   3
     [	220	, 20	, 60	],	 # pedestrian    =   4
     # [	153	, 153	, 153	],	 # pole          =   5
@@ -149,6 +152,22 @@ def get_carla_labels():
     # [	145	, 170	, 100	],	 # terrain       =  22
 
 
+    # [0, 0, 0],   # 0: Unlabeled
+    # [0, 1, 0],   # 1: Motorcycle
+    # [1, 0, 0],   # 2: Pedestrian
+    # [0, 1, 1],   # 3: CommVeh
+    # [0, 0, 1],   # 4: Vehicle
+    # [1, 1, 0]    # 5: Bicycle
+
+def get_kusv_labels():
+    return np.array([
+        [0, 0, 0],  # 0: Unlabeled
+        [0, 1, 0],  # 1: Motorcycle
+        [1, 0, 0],  # 2: Pedestrian
+        [0, 1, 1],  # 3: CommVeh
+        [0, 0, 1],  # 4: Vehicle
+        [1, 1, 0]   # 5: Bicycle
+    ])
 def get_pascal_labels():
     """Load the mapping that associates pascal classes with label colors
     Returns:

@@ -102,6 +102,7 @@ class Trainer(object):
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
             output = self.model(image)
+            # print(output.shape, target.shape)
             loss = self.criterion(output, target)
             loss.backward()
             self.optimizer.step()
@@ -183,7 +184,7 @@ def main():
     parser.add_argument('--out-stride', type=int, default=16,
                         help='network output stride (default: 8)')
     parser.add_argument('--dataset', type=str, default='pascal',
-                        choices=['pascal', 'coco', 'cityscapes', 'morai', 'carla'],
+                        choices=['pascal', 'coco', 'cityscapes', 'morai', 'carla', 'kusv'],
                         help='dataset name (default: pascal)')
     parser.add_argument('--use-sbd', action='store_true', default=True,
                         help='whether to use SBD dataset (default: True)')
@@ -269,6 +270,7 @@ def main():
             'morai': 200, # 나중에 바꾸기!
             'carla': 200, # 나중에 바꾸기!
             'pascal': 50,
+            'kusv': 200,
         }
         args.epochs = epoches[args.dataset.lower()]
 
@@ -285,6 +287,7 @@ def main():
             'morai': 0.01, # 나중에 바꾸기
             'carla': 0.01, # 나중에 바꾸기
             'pascal': 0.007,
+            'kusv': 0.01,
         }
         args.lr = lrs[args.dataset.lower()] / (4 * len(args.gpu_ids)) * args.batch_size
 
