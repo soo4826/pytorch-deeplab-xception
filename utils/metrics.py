@@ -22,6 +22,7 @@ class Evaluator(object):
         print("IoU : " + str(MIoU))
         print(MIoU, MIoU.shape)
         MIoU = np.nanmean(MIoU)
+        print("MIoU: ", MIoU)
         return MIoU
 
     def Frequency_Weighted_Intersection_over_Union(self):

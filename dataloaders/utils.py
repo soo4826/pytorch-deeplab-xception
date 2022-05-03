@@ -167,7 +167,7 @@ def get_kusv_labels():
         [0, 1, 1],  # 3: CommVeh
         [0, 0, 1],  # 4: Vehicle
         [1, 1, 0]   # 5: Bicycle
-    ])
+    ])*255
 def get_pascal_labels():
     """Load the mapping that associates pascal classes with label colors
     Returns:

@@ -1,2 +1,2 @@
 # For 3090x4
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --backbone resnet --lr 0.001 --workers 4 --epochs 200 --batch-size 32 --gpu-ids 0,1,2,3 --checkname kusv-deeplab-resnet --eval-interval 1 --dataset kusv
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --backbone resnet --lr 0.001 --workers 4 --epochs 500 --batch-size 32 --gpu-ids 0,1,2,3 --checkname kusv-deeplab-resnet --eval-interval 1 --dataset kusv --resume /home/user/jinsu/02_Semantic_Fusion/pytorch-deeplab-xception/run/kusv/kusv-deeplab-resnet/experiment_0/checkpoint.pth.tar

@@ -11,7 +11,7 @@ import json
 from PIL import Image
 from modeling.deeplab import *
 from dataloaders import utils, make_data_loader
-from dataloaders.datasets import carla
+from dataloaders.datasets import carla, kusv
 from utils.metrics import Evaluator
 from torchvision import transforms
 import torchvision.transforms as tr
@@ -22,13 +22,15 @@ class Tester(object):
         if not os.path.isfile(args.parameter):
             raise RuntimeError("no checkpoint found at '{}'".format(args.parameter))
         self.args = args
-        self.color_map = utils.get_carla_labels()
+        # self.color_map = utils.get_carla_labels()
+        self.color_map = utils.get_kusv_labels()
         self.nclass = int(args.num_class)
         self.save_result = args.save_result
         self.save_path = args.save_path
         self.batch_size=args.batch_size
         # Init dataloader
-        test_set = carla.CarlaDataset(args, split='test')
+        # test_set = carla.CarlaDataset(args, split='test')
+        test_set = kusv.KUSVDataset(args, split='train')
         self.class_name = test_set.class_names
         self.test_loader = DataLoader(test_set, batch_size=self.batch_size, shuffle=False)
 
@@ -50,7 +52,8 @@ class Tester(object):
         
 
     def save_image(self, path, img, save_num):
-        decode_pred = decode_segmap(img, dataset='carla', plot=False)
+        decode_pred = decode_segmap(img, dataset='kusv', plot=False)
+        print(decode_pred.max())
         # print(np.max(decode_pred.reshape(-1, 1)))
         save_img = Image.fromarray(decode_pred.astype('uint8'))
         save_img.save(os.path.join(path, str(save_num).zfill(6) + str('.png')))
@@ -102,7 +105,7 @@ def main():
                     choices=['resnet', 'xception', 'drn', 'mobilenet'],
                     help='backbone name (default: resnet)')
     parser.add_argument('--dataset', type=str, default='pascal',
-                    choices=['pascal', 'coco', 'cityscapes', 'morai', 'carla'],
+                    choices=['pascal', 'coco', 'cityscapes', 'morai', 'carla', 'kusv'],
                     help='dataset name (default: pascal)')
     parser.add_argument('--parameter', type=str, default='./checkpoint.pth',
                     help='model parameter path  (default: ./checkpoint.pth)')

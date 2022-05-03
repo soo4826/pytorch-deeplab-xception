@@ -113,3 +113,4 @@ venv.bak/
 # data/kusv_dataset_1000/*
 data/**/*.jpg
 data/**/*.png
+*.png
